@@ -78,7 +78,7 @@ cl_platform_id select_platform()
     free(p.ids);
     if (selected == 0)
     {
-        fprintf(stderr, "OOOOOOOUU, we dont find some divece, ((");
+        fprintf(stderr, "OOOOOOOUU, we dont find some device, ((");
         abort();
     }
 
