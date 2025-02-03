@@ -87,8 +87,8 @@ cl_platform_id select_platform()
 
 void process_buffer(struct ocl_ctx_t *pct)
 {
-    int A[BUFSZ], C[BUFSZ], i;
-    int B[BUFSZ] = {0};
+    float A[BUFSZ], B[BUFSZ], i;
+    float C[BUFSZ] = {0};
     size_t global_size =BUFSZ;
     cl_mem bufA, bufB, bufC;
     cl_int ret;
@@ -98,16 +98,16 @@ void process_buffer(struct ocl_ctx_t *pct)
         B[i] = 2+i;
     }
 
-    bufA = clCreateBuffer(pct->ctx, CL_MEM_READ_ONLY, BUFSZ*sizeof(int), NULL, &ret);
+    bufA = clCreateBuffer(pct->ctx, CL_MEM_READ_ONLY, BUFSZ*sizeof(float), NULL, &ret);
     CHECK_ERR(ret);
-    bufB = clCreateBuffer(pct->ctx, CL_MEM_READ_ONLY, BUFSZ*sizeof(int), NULL, &ret);
+    bufB = clCreateBuffer(pct->ctx, CL_MEM_READ_ONLY, BUFSZ*sizeof(float), NULL, &ret);
     CHECK_ERR(ret);
-    bufC = clCreateBuffer(pct->ctx, CL_MEM_WRITE_ONLY, BUFSZ*sizeof(int), NULL, &ret);
+    bufC = clCreateBuffer(pct->ctx, CL_MEM_WRITE_ONLY, BUFSZ*sizeof(float), NULL, &ret);
     CHECK_ERR(ret);
 
-    ret = clEnqueueWriteBuffer(pct->queue, bufA, CL_TRUE, 0, BUFSZ*sizeof(int), A, 0, NULL, NULL);
+    ret = clEnqueueWriteBuffer(pct->queue, bufA, CL_TRUE, 0, BUFSZ*sizeof(float), A, 0, NULL, NULL);
     CHECK_ERR(ret);
-    ret = clEnqueueWriteBuffer(pct->queue, bufB, CL_TRUE, 0, BUFSZ*sizeof(int), B, 0, NULL, NULL);
+    ret = clEnqueueWriteBuffer(pct->queue, bufB, CL_TRUE, 0, BUFSZ*sizeof(float), B, 0, NULL, NULL);
     CHECK_ERR(ret);
 
     cl_program program = clCreateProgramWithSource(pct->ctx, 1, (const char**)&source, NULL, &ret);
@@ -130,13 +130,13 @@ void process_buffer(struct ocl_ctx_t *pct)
     ret = clEnqueueNDRangeKernel(pct->queue, kernel, 1, NULL, &global_size, NULL, 0, NULL,NULL);
     CHECK_ERR(ret);
     
-    ret = clEnqueueReadBuffer(pct->queue, bufC, CL_TRUE, 0, BUFSZ*sizeof(int), C, 0, NULL, NULL);
+    ret = clEnqueueReadBuffer(pct->queue, bufC, CL_TRUE, 0, BUFSZ*sizeof(float), C, 0, NULL, NULL);
     CHECK_ERR(ret);
 
     printf("Res\n");
     for (int i = 0; i < BUFSZ; i++)
     {
-        printf("%d + %d = %d \n", A[i], B[i], C[i]);
+        printf("%f + %f = %f \n", A[i], B[i], C[i]);
     }
     clReleaseMemObject(bufA);
     clReleaseMemObject(bufB);
