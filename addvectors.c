@@ -87,7 +87,8 @@ cl_platform_id select_platform()
 
 void process_buffer(struct ocl_ctx_t *pct)
 {
-    float A[BUFSZ], B[BUFSZ], i;
+    float A[BUFSZ], B[BUFSZ];
+    int i;
     float C[BUFSZ] = {0};
     size_t global_size =BUFSZ;
     cl_mem bufA, bufB, bufC;
