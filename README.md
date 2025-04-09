@@ -1,6 +1,10 @@
-<h1>Add-Vectors</h1>
-<h3>Описание</h3>
-Этот проект создан в рамках зимней школы RISC-V и демонстрирует сложение векторов с использованием OpenCL. Проект предназначен для изучения основ работы с GPU и OpenCL.
-<h3>Компиляция</h3>
+This project was developed as part of the RISC-V Winter School and demonstrates vector addition using OpenCL.
+The goal is to explore GPU computing basics with OpenCL.
 
-`gcc  addvector.c -o addvector -lOpecnCl`
+
+<h2>Quick start</h2>
+
+```bash 
+make        # Builds the executable
+./addvectors # Runs the program
+```
